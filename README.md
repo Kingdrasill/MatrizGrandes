@@ -1,2 +1,1 @@
-# MatrizesGrandes
-Trabalhando com matrizes muito grandes em arquivos
+# Trabalhando com matrizes muito grandes em arquivos
