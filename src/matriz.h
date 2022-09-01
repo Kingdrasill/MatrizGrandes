@@ -1,5 +1,6 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -20,14 +21,17 @@ struct Ponto {
 struct Matriz {
     int c;
     int l;
-    int **m;
+    int **mi;
+    float **mf;
+    bool tipo;
 };
 
-void createMatriz(Matriz *M, int c, int l);
-Matriz createTransposta(Matriz *M);
-Matriz multiplyMatriz(Matriz *M, Matriz *MT);
-Matriz getMatrizFromFile(char arquivo[MAX_FILE], Ponto p1, Ponto p2, int coluna);
+void createMatriz(Matriz *M, int c, int l, bool tipo);
+void printMatriz(Matriz *M, bool tipo);
+Matriz createTransposta(Matriz *M, bool tipo);
+Matriz multiplyMatriz(Matriz *M, bool tipo);
+Matriz getMatrizFromFile(char arquivo[MAX_FILE], Ponto p1, Ponto p2, int coluna, bool tipo);
 bool createArquivoMatriz(char arquivo[MAX_FILE]);
-bool createArquivoCoordenadas(char arquivo[MAX_FILE]);
+bool createArquivoCoordenadas();
 
 #endif

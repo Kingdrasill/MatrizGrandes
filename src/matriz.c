@@ -1,73 +1,143 @@
 #include "matriz.h"
 
-void createMatriz(Matriz *M, int c, int l) {
+void createMatriz(Matriz *M, int c, int l, bool tipo) {
     M->c = c;
     M->l = l;
-    M->m = malloc(l * sizeof(int*));
+    M->tipo = tipo;
+    if(tipo) { 
+        M->mi = malloc(l * sizeof(int*));
 
-    for(int i=0; i<l; i++) {
-        M->m[i] = malloc(c *sizeof(int));
+        for(int i=0; i<l; i++) {
+            M->mi[i] = malloc(c *sizeof(int));
+        }
+    } else {
+        M->mf = malloc(l * sizeof(float*));
+
+        for(int i=0; i<l; i++) {
+            M->mf[i] = malloc(c *sizeof(float));
+        }
     }
 }
 
-Matriz createTransposta(Matriz *M) {
+void printMatriz(Matriz *M, bool tipo) {
+    if(tipo) {
+        for(int i=0; i<M->l; i++) {
+            for(int j=0; j<M->c; j++) {
+                printf("%d\t", M->mi[i][j]);
+            }
+            printf("\n");
+        }
+    } else {
+        for(int i=0; i<M->l; i++) {
+            for(int j=0; j<M->c; j++) {
+                printf("%f\t", M->mf[i][j]);
+            }
+            printf("\n");
+        }
+    }
+}
+
+Matriz createTransposta(Matriz *M, bool tipo) {
     Matriz MT;
 
-    createMatriz(&MT, M->l, M->c);
+    createMatriz(&MT, M->l, M->c, tipo);
     
-    for(int i=0; i<M->l; i++) {
-        for(int j=0; j<M->c; j++) {
-            MT.m[j][i] = M->m[i][j];
+    if(tipo) {
+        for(int i=0; i<M->l; i++) {
+            for(int j=0; j<M->c; j++) {
+                MT.mi[j][i] = M->mi[i][j];
+            }
+        }
+    } else {
+        for(int i=0; i<M->l; i++) {
+            for(int j=0; j<M->c; j++) {
+                MT.mf[j][i] = M->mf[i][j];
+            }
         }
     }
     
     return MT;
 }
 
-Matriz multiplyMatriz(Matriz *M, Matriz *MT) {
-    Matriz Result;
-    int somaprod = 0;
+Matriz multiplyMatriz(Matriz *M, bool tipo) {
+    Matriz Result, MT;
+    int somaprodi = 0;
+    float somaprodf = 0;
 
-    createMatriz(&Result, MT->c, M->l);
+    MT = createTransposta(M, tipo);
 
-    for(int i=0; i<Result.l; i++) {
-        for(int j=0; j<Result.c; j++){
-            somaprod = 0;
-            for(int n=0; n<M->c; n++) {
-                somaprod += M->m[i][n] * MT->m[n][j];
+    createMatriz(&Result, MT.c, M->l, tipo);
+
+    if(tipo) {
+        for(int i=0; i<Result.l; i++) {
+            for(int j=0; j<Result.c; j++){
+                somaprodi = 0;
+                for(int n=0; n<M->c; n++) {
+                    somaprodi += M->mi[i][n] * MT.mi[n][j];
+                }
+                Result.mi[i][j] = somaprodi;
             }
-            Result.m[i][j] = somaprod;
+        }
+    } else {
+        for(int i=0; i<Result.l; i++) {
+            for(int j=0; j<Result.c; j++){
+                somaprodf = 0;
+                for(int n=0; n<M->c; n++) {
+                    somaprodf += M->mf[i][n] * MT.mf[n][j];
+                }
+                Result.mf[i][j] = somaprodf;
+            }
         }
     }
 
     return Result;
 }
 
-Matriz getMatrizFromFile(char arquivo[MAX_FILE], Ponto p1, Ponto p2, int coluna) {
+Matriz getMatrizFromFile(char arquivo[MAX_FILE], Ponto p1, Ponto p2, int coluna, bool tipo) {
     FILE *fp;
     Matriz M;
-    int number=0, c=0, l=0, i=0, j=0;
+    int numberi=0, c=0, l=0, i=0, j=0, espacamento;
+    float numberf=0;
 
     c = p2.x - p1.x + 1;
     l = p2.y - p1.y + 1;
 
-    createMatriz(&M, c, l);
+    createMatriz(&M, c, l, tipo);
+
+    if(tipo)
+        espacamento = 3;
+    else
+        espacamento = 10;
 
     fp = fopen(arquivo, "r");
     if (fp == NULL) {
         printf("\nErro!Nao foi possivel abrir o arquivo!");
         return M;
     } else {
-        fseek(fp, ((3*(coluna)*(p1.y+i))+(p1.y+i) + 3*p1.x), SEEK_SET);
-        while(i < l) {
-            j = 0;
-            while(j < c) {
-                fscanf(fp, "%d", &number);
-                M.m[i][j] = number;
-                j++;
+        if(tipo) {
+            fseek(fp, ((espacamento*(coluna)*(p1.y+i))+(p1.y+i) + espacamento*p1.x), SEEK_SET);
+            while(i < l) {
+                j = 0;
+                while(j < c) {
+                    fscanf(fp, "%d", &numberi);
+                    M.mi[i][j] = numberi;
+                    j++;
+                }
+                i++;
+                fseek(fp, ((espacamento*(coluna)*(p1.y+i))+(p1.y+i) + espacamento*p1.x), SEEK_SET);
             }
-            i++;
-            fseek(fp, ((3*(coluna)*(p1.y+i))+(p1.y+i) + 3*p1.x), SEEK_SET);
+        } else {
+            fseek(fp, ((espacamento*(coluna)*(p1.y+i))+(p1.y+i) + espacamento*p1.x), SEEK_SET);
+            while(i < l) {
+                j = 0;
+                while(j < c) {
+                    fscanf(fp, "%f", &numberf);
+                    M.mf[i][j] = numberf;
+                    j++;
+                }
+                i++;
+                fseek(fp, ((espacamento*(coluna)*(p1.y+i))+(p1.y+i) + espacamento*p1.x), SEEK_SET);
+            }
         }
     }
     fclose(fp);
@@ -82,7 +152,7 @@ bool createArquivoMatriz(char arquivo[MAX_FILE]) {
     float flutuante;
     bool tipo;
 
-    printf("Tipo de arquivo:\n1 - Inteiros(0-99)\n2 - Ponto flutuantes(0.000000-99.99999)\nOpcao: ");
+    printf("Tipo de matriz:\n1 - Inteiros(0-99)\n2 - Ponto flutuantes(0.000000-99.99999)\nOpcao: ");
     scanf("%d", &inteiro);
 
     switch (inteiro) {
@@ -93,7 +163,7 @@ bool createArquivoMatriz(char arquivo[MAX_FILE]) {
             tipo = false;
             break;
         default:
-            printf("\nOpcao Invalida!\n");
+            printf("\nOpcao Invalida!");
             return false;
     }
 
@@ -132,13 +202,14 @@ bool createArquivoMatriz(char arquivo[MAX_FILE]) {
     return true;
 }
 
-bool createArquivoCoordenadas(char arquivo[MAX_FILE]) {
+bool createArquivoCoordenadas() {
+    char arquivo[MAX_FILE] = "coordenadas.txt";
     srand( (unsigned)time(NULL) );
     FILE *fp;
     int n1=-1, n2=-1, n3=-1, n4=-1, l, c, aux;
     bool cont = true;
 
-    printf("As coordenadas serao geras aleatoriamente!\nTamanho da matriz no arquivo: ");
+    printf("As coordenadas serao geras aleatoriamente!\nDimensoes da matriz em que as cooredenadas sera usadas: ");
     scanf("%d %d", &l, &c);
 
     fp = fopen(arquivo, "w");
@@ -162,7 +233,7 @@ bool createArquivoCoordenadas(char arquivo[MAX_FILE]) {
             }
         }
 
-        printf("\nArquivo %s gerado!", arquivo);
+        printf("\nArquivo %s gerado!\n", arquivo);
     }
     fclose(fp);
 
