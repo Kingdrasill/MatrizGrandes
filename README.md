@@ -8,7 +8,13 @@
 <p></p>
 
 <p align="justify">
-  Quando se está trabalhando com matrizes muito grands, com matrizes 10000x10000, um computador nomalmente não consiguira alaocar memória suficiente para poder trabalhar com está matriz, uma das formas de contornar este problema é colocar a matriz em um arquivo e pegar partes dela. Este algoritmo
+  Quando se está trabalhando com matrizes muito grands, com matrizes 10000x10000, um computador nomalmente não consiguira alaocar memória suficiente para poder trabalhar com está matriz, uma das formas de contornar este problema é colocar a matriz em um arquivo e pegar partes dela. Este código tem como objetivo fazer isto, além de quando a matriz for pega será feita a transposta dela e multiplicara as duas e mostra o resultado. A multiplicação de matrizes é algo que custa muito tempo, para contornar este problema será utilizada uma tabela hash que guardara os resultados da multiplições para caso precisa dela novamete será necessário apenas pegar ela da hash.
+</p>
+
+# A matriz
+
+<p aling="justify">
+  As matrizes
 </p>
 
 # Compilação e Execução
