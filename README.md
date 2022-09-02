@@ -28,7 +28,7 @@
 </p>
 
 <p align="center">
-  <img src=images/matriz.jpgs;
+  <img src=images/hash.jpg;
 </p>
 
 #Execução do progama
