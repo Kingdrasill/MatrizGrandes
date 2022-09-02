@@ -17,18 +17,18 @@
   A estrutura Matriz foi criada para representar uma matriz, nela há variáveis que guarda as dimensões da matriz, uma para guardar o tipo da matriz e duas outras que guardam as matrizes do determinado tipo da variável, logo se o tipo for true será armazenada em uma matriz de inteiros e se for false a matriz será uma matriz d pontos flutuantes, abaixo está uma foto da estrutura:   
 </p>
 
-<p align=˜center>
-  <img src=˜images/matriz.jpg˜>
+<p align="center">
+  <img src="images/matriz.png">
 </p>
 
 # A hash
 
-<p align=˜justify˜>
+<p align="justify">
   A estrutura da hash foi baseada na seguinte: <a href="https://github.com/mpiress/HashTable">https://github.com/mpiress/HashTable</a> a sua diferença é que em de guardar um valor será guardado a estrutura Matriz, o tipo de matriz que foi inserida e as coordenadas que deram origem ao resultado da matriz. a imagem abaixo mostra a nova estrutura. Sobre as coordenadas para se criar a chave com elas, foi criado a aeguinte l[ogica (maiorColuna - menorColuna) MOD (maiorLinha - maiorColuna). 
 </p>
 
 <p align="center">
-  <img src=images/hash.jpg;
+  <img src="images/hash.png">
 </p>
 
 #Execução do progama
@@ -37,26 +37,25 @@
   A primeira coisa que aparece quanto o código é iniciado mstra-se um menu, imagem abaixo), nele há 5 opções: 0 - Par dar/muar o nome do arquivo da matriz, 1 - Gerar a matriz no arquivo, 2 - Pegar as matrizes do arquivo, 3 - Para criar o arquivo de coordenadas e 4 - Para sair do progama. É obrigatório informar o nome do arquivo antes de criar o ler o arquivo. Quando for pedido as dimensões da matriz deve se informar a quantidade de linhas e a quantidade de colunas separados por espaço.  
 </p>
 
-<p align-˜center">
-  <img src=˜images/menu.jpg˜>
+<p align="center">
+  <img src="images/menu.png">
 <p> 
 
-<p align=˜justify˜>
-  Na opção 0, o nome do arquivo é pdeido para ser setado/mudado. A imagem abaixo mostra como o nome é setado. A opção 4 apenas serve para sair do códig.
+<p align="justify">
+  As opções 0 e 4 são bem simples, na 0 é pedido informar o nome do arquivo que a matriz vai ser trabalhada e há 4 serve para parar a execução do código. As duas imagens abaixo mostram as opções 0 e 4.
 </p>
 
 <p align="center">
-  <img href=˜images/opcao-0.jpg>
-  <img href=˜images/opcao-4s.jpg>
+  <img src="images/opcao-0.png">
+  <img src="images/opcao-4.png">
 </p>
 
-<p align=˜justify˜>
+<p align="justify">
   Na opção 1, o nome do arquivo setado na opção agora será utilizado para criar o arquivo da matriz. Primeiro é perguntado qual tipo de matriz deve ser criada a duas op. A imagem abaixo mostra como o nome é setado. A opção 4 apenas serve para sair do códig.
 </p>
 
 <p align="center">
-  <img href=˜images/opcao-0.jpg>
-  <img href=˜images/opcao-4s.jpg>
+  <img href="images/opcao-1.jpg">
 </p>
 
 # Compilação e Execução
